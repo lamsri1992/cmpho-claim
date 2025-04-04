@@ -89,7 +89,6 @@
                                         <th class="text-center">No</th>
                                         <th class="text-center">ICD10</th>
                                         <th class="">รายการ</th>
-                                        {{-- <th class="text-left">รายละเอียด</th> --}}
                                         <th class="text-center">ค่าใช้จ่ายจริง</th>
                                         <th class="text-center">อัตราจ่าย</th>
                                         <th class="text-center">จำนวน</th>
@@ -134,28 +133,6 @@
                                             {{ $rs->fs_code." : ".$text }}
                                             @endif
                                         </td>
-                                        {{-- <td class="text-center {{ $bg }}">
-                                            @if ($rs->nhso_code != "")
-                                            {{ $rs->nhso_code }}
-                                            @endif
-                                            @if ($rs->tid != "")
-                                            {{ $rs->tid }}
-                                            @endif
-                                            @if ($rs->nhso_code == "" && $rs->tid == "") 
-                                            {{ $rs->fs_code }}
-                                            @endif
-                                        </td>
-                                        <td class="text-left {{ $bg }}">
-                                            @if ($rs->nhso_code != "")
-                                            {{ $rs->nhso_name }}
-                                            @endif
-                                            @if ($rs->tid != "")
-                                            {{ $rs->dname }}
-                                            @endif
-                                            @if ($rs->nhso_code == "" && $rs->tid == "") 
-                                            {{ $text }}
-                                            @endif
-                                        </td> --}}
                                         <td class="text-center {{ $bg }}">
                                             {{ number_format($rs->total,2) }}
                                         </td>
@@ -225,7 +202,6 @@
                                                 {{ number_format($paid+$pdrg,2) }} ฿
                                             </span>
                                         </td>
-                                        <td></td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -269,7 +245,7 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label>จำนวน</label>
-                            <input type="text" name="unit" class="form-control" placeholder="ระบุจำนวน">
+                            <input type="text" name="num" class="form-control" placeholder="ระบุจำนวน">
                         </div>
                         <div class="form-group col-md-4">
                             <label>ค่าใช้จ่าย</label>

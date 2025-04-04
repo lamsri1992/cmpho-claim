@@ -180,7 +180,7 @@ class debtor extends Controller
                     'icd10' => $request->icd10,
                     'fs_code' => $value['fs_code'],
                     'total' => $value['total'],
-                    'unit' => $value['unit'],
+                    'num' => $value['num'],
                     'hcode' => $hcode,
                     'process_date' => $currentDate,
                     'updated_at' => $currentDate
@@ -199,13 +199,13 @@ class debtor extends Controller
             [
                 'icd10' => 'required',
                 'fs_code' => 'required',
-                'unit' => 'required',
+                'num' => 'required',
                 'total' => 'required',
             ],
             [
                 'icd10.required' => 'ระบุ ICD10',
                 'fs_code.required' => 'ระบุรหัสบริการ',
-                'unit.required' => 'ระบุจำนวน',
+                'num.required' => 'ระบุจำนวน',
                 'total.required' => 'ระบุค่าใช้จ่ายจริง',
             ],
         );
@@ -225,7 +225,7 @@ class debtor extends Controller
                 'auth_code' => $data->auth_code,
                 'icd10' => $data->icd10,
                 'fs_code' => $request->fs_code,
-                'unit' => $request->unit,
+                'num' => $request->num,
                 'total' => $request->total,
                 'hcode' => $hcode,
                 'process_date' => $currentDate,

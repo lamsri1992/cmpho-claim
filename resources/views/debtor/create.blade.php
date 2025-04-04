@@ -96,7 +96,7 @@
                                                         <input type="text" name="addField[0][fs_code]" class="form-control" placeholder="ระบุรหัสบริการ">
                                                     </td>
                                                     <td width="20%">
-                                                        <input type="text" name="addField[0][unit]" class="form-control" placeholder="ระบุจำนวน">
+                                                        <input type="text" name="addField[0][num]" class="form-control" placeholder="ระบุจำนวน">
                                                     </td>
                                                     <td width="20%">
                                                         <input type="text" name="addField[0][total]" class="form-control" placeholder="ระบุค่าใช้จ่าย">
@@ -158,7 +158,7 @@
 
         $("#tableCost").append('<tr>'+
         '<td><input type="text" id="fs_code'+i+'" name="addField['+i+'][fs_code]" class="form-control" placeholder="ระบุรหัสบริการ"></div></td>'+
-        '<td><input type="text" id="unit'+i+'" name="addField['+i+'][unit]" class="form-control" placeholder="ระบุจำนวน"></div></td>'+
+        '<td><input type="text" id="num'+i+'" name="addField['+i+'][num]" class="form-control" placeholder="ระบุจำนวน"></div></td>'+
         '<td><input type="text" id="total'+i+'" name="addField['+i+'][total]" class="form-control" placeholder="ระบุค่าใช้จ่าย"></div></td>'+
         '<td><button type="button" class="btn btn-sm btn-danger remove-input-field mt-1"><i class="fa-solid fa-minus"></i></button></td>'+
         '</tr>');
