@@ -25,4 +25,11 @@ Route::prefix('cmpho/config')->group(function () {
     Route::post('hospital/create', [configController::class, 'hospitalCreate'])->middleware(['auth', 'verified'])->name('config.hospital.create');
     Route::get('users', [configController::class, 'users'])->middleware(['auth', 'verified'])->name('config.users');
     Route::post('user/create', [configController::class, 'userCreate'])->middleware(['auth', 'verified'])->name('config.user.create');
+    Route::get('nhso', [configController::class, 'nhso'])->middleware(['auth', 'verified'])->name('config.nhso');
+    Route::get('status', [configController::class, 'status'])->middleware(['auth', 'verified'])->name('config.nhso.status');
+});
+
+Route::prefix('cmpho/setting')->group(function () {
+    Route::get('nhso', [configController::class, 'nhso'])->middleware(['auth', 'verified'])->name('config.nhso');
+    Route::get('status', [configController::class, 'status'])->middleware(['auth', 'verified'])->name('config.nhso.status');
 });

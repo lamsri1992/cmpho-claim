@@ -79,9 +79,9 @@
                                                 {{ number_format($diff,2)." ฿" }}
                                             </span>
                                         </td>
-                                        <td class="text-center {{ $rs->p_color }}">
+                                        {{-- <td class="text-center {{ $rs->p_color }}">
                                             {{ $rs->p_name }}
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -108,7 +108,7 @@
                                                 {{ number_format($tdiff,2)." ฿" }}
                                             </span>
                                         </td>
-                                        <td></td>
+                                        {{-- <td></td> --}}
                                     </tr>
                                 </tfoot>
                             </table>

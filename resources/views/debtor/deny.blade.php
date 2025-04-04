@@ -41,31 +41,17 @@
                                         <th class="text-center">วันที่</th>
                                         <th class="text-center">สถานบริการหลัก</th>
                                         <th class="text-center">HN</th>
-                                        <th class="text-center">รหัสบริการ</th>
+                                        <th class="">รหัสบริการ</th>
                                         <th class="text-center">ค่าใช้จ่าย</th>
                                         <th class="text-center">อัตราจ่าย</th>
                                         <th class="text-center">สถานะ</th>
+                                        <th class="text-center"><i class="fa-regular fa-clipboard"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @php $i = 0; @endphp
                                     @foreach ($data as $rs)
                                     @php $i++; @endphp
-                                    @if (!isset($rs->nhso_code))
-                                    @php 
-                                        $icon = 'error';
-                                        $text = 'ไม่พบข้อมูลใน NHSO FS-CODE';
-                                        $check = $rs->fs_code;
-                                        $bg = 'bg-danger';
-                                    @endphp
-                                    @else
-                                    @php 
-                                        $icon = 'success';
-                                        $text = '';
-                                        $check = $rs->nhso_code;
-                                        $bg = 'bg-success';
-                                    @endphp
-                                    @endif
                                     <tr>
                                         <td class="text-center">{{ $i }}</td>
                                         <td class="text-center">
@@ -76,28 +62,20 @@
                                         <td class="text-center">{{ date("d/m/Y", strtotime($rs->visitdate)) }}</td>
                                         <td class="text-center">{{ $rs->hospmain." : ".$rs->h_name }}</td>
                                         <td class="text-center">{{ $rs->hn }}</td>
-                                        <td class="text-center {{ $bg }}">
-                                            <a href="#" 
-                                                onclick="
-                                                    Swal.fire({
-                                                        icon: '{{ $icon }}',
-                                                        title: '{{ $check }}',
-                                                        text: '{{ $text.$rs->nhso_name }}',
-                                                    });
-                                                ">
-                                                {{ $check }}
-                                            </a>
+                                        <td class="">
+                                            {{ $rs->nhso_name }}
                                         </td>
-                                        <td class="text-center {{ $bg }}">{{ number_format($rs->total,2) }}</td>
-                                        <td class="text-center {{ $bg }}">{{ number_format($rs->nhso_cost,2) }}</td>
+                                        <td class="text-center">{{ number_format($rs->total,2) }}</td>
+                                        <td class="text-center">{{ number_format($rs->nhso_cost,2) }}</td>
                                         <td class="text-center">
                                             <a href="#" class="{{ $rs->p_text_color }}"
-                                                onclick="
-                                                Swal.fire({
-                                                    title: '{{ $rs->p_name }}',
-                                                });
-                                            ">
-                                                {!! $rs->p_icon !!}
+                                                onclick="Swal.fire('{{ $rs->deny_note }}')">
+                                                {{ $rs->p_name }}
+                                            </a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="#">
+                                                ยื่นอุทธรณ์
                                             </a>
                                         </td>
                                     </tr>

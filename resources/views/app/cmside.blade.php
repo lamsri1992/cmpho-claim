@@ -1,8 +1,8 @@
 <aside class="main-sidebar sidebar-dark-secondary elevation-4">
-    <a href="index3.html" class="brand-link">
+    <a href="#" class="brand-link">
         <img src="{{ asset('img/logo_cmh.png') }}" alt="AdminLTE Logo"
             class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">CMPHO - MFCIMS</span>
+        <span class="brand-text font-weight-light">CMPHO - CLAIM</span>
     </a>
 
     <div class="sidebar mt-2">
@@ -104,9 +104,9 @@
                     </ul>
                 </li>
                 <li
-                    class="nav-item {{ request()->is('nhso*') ? 'menu-is-opening menu-open':'' }}">
+                    class="nav-item {{ request()->is('cmpho/setting*') ? 'menu-is-opening menu-open':'' }}">
                     <a href="#"
-                        class="nav-link {{ request()->is('nhso*') ? 'active':'' }}">
+                        class="nav-link {{ request()->is('cmpho/setting*') ? 'active':'' }}">
                         <i class="nav-icon fa-solid fa-clipboard-list"></i>
                         <p>
                             เกณฑ์ราคา สปสช.
@@ -115,15 +115,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('nhso.list') }}"
-                                class="nav-link {{ request()->is('nhso/list') ? 'active':'' }}">
+                            <a href="{{ route('config.nhso') }}"
+                                class="nav-link {{ request()->is('cmpho/setting/nhso') ? 'active':'' }}">
                                 <i class="fa-regular fa-circle nav-icon"></i>
                                 <p>อัตราจ่ายค่าบริการ</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('nhso.drug') }}"
-                                class="nav-link {{ request()->is('nhso/drug*') ? 'active':'' }}">
+                                class="nav-link {{ request()->is('cmpho/setting/drug*') ? 'active':'' }}">
                                 <i class="fa-regular fa-circle nav-icon"></i>
                                 <p>อัตราจ่ายค่ายา</p>
                             </a>

@@ -190,6 +190,7 @@
                                                 <div class="col-md-6">
                                                     <form action="{{ route('creditor.vn.deny',$rs->uuid) }}" method="post">
                                                         @csrf
+                                                        <input type="hidden" name="sweetalert_value" id="sweetalert_value">
                                                         <button type="button" class="btn btn-default"
                                                             {{ ($rs->p_status) != 3 ? 'disabled' : '' }}
                                                             onclick="
@@ -197,10 +198,19 @@
                                                                     icon: 'warning',
                                                                     title: 'ปฏิเสธจ่าย - ' + '{{ $rs->fs_code }}',
                                                                     showCancelButton: true,
+                                                                    input: 'text',
+                                                                    inputLabel: 'ระบุเหตุผลการปฏิเสธจ่าย',
                                                                     confirmButtonText: 'ปฏิเสธจ่าย',
                                                                     cancelButtonText: 'ยกเลิก',
+                                                                    inputValidator: (value) => {
+                                                                        if (!value) {
+                                                                            return 'กรุณาระบุหมายเหตุ';
+                                                                            }
+                                                                        }
                                                                 }).then((result) => {
                                                                     if (result.isConfirmed) {
+                                                                        // alert(result.value)
+                                                                        document.getElementById('sweetalert_value').value = result.value;
                                                                         form.submit()
                                                                     } else if (result.isDenied) {
                                                                         form.clear()
@@ -214,10 +224,11 @@
                                                 </div>
                                             </div>                                                
                                             @else
-                                            <span class="{{ $rs->p_text_color }}">
+                                            <a href="#" class="{{ $rs->p_text_color }}"
+                                                onclick="Swal.fire('{{ $rs->deny_note }}')">
                                                 {!! $rs->p_icon !!}
                                                 {{ $rs->p_name }}
-                                            </span>
+                                            </a>
                                             @endif
                                         </td>
                                     </tr>

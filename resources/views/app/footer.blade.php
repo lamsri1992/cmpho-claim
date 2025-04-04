@@ -2,5 +2,5 @@
     <div class="float-right d-none d-sm-inline">
         กลุ่มงานสุขภาพดิจิทัล สำนักงานสาธารณสุขจังหวัดเชียงใหม่
     </div>
-    <span>CMPHO - MFCIMS : Medical Fee Compensations Information Management System</span>
+    <span>CMPHO - CLAIM : ระบบเรียกเก็บชดเชยค่ารักษาพยาบาล ระหว่างหน่วยบริการในจังหวัดเชียงใหม่</span>
 </footer>

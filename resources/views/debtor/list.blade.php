@@ -226,82 +226,82 @@
                             }
                         }
                     },
-                    {
-                        text: '<i class="fa-solid fa-xmark-circle text-danger"></i> ลบข้อมูลที่ไม่ผ่านการตรวจสอบ',
-                        action: function (e, dt, node, config) {
-                            var count = {{ $deny }};
-                            if(count <= 0){
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'ไม่มีข้อมูล',
-                                    text: count + ' รายการ',
-                                    showCancelButton: false,
-                                });
-                            }else{
-                                Swal.fire({
-                                icon: 'warning',
-                                title: 'ยืนยันการลบข้อมูล ?',
-                                text: 'ลบเฉพาะ VN ที่ไม่ผ่านการตรวจสอบ ' + '{{ number_format($deny) }}' + ' รายการ',
-                                showCancelButton: true,
-                                confirmButtonText: "ลบข้อมูล",
-                                cancelButtonText: "ยกเลิก",
-                                confirmButtonColor: "#dc3545",
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    Swal.fire({
-                                        title: "กำลังลบ",
-                                        text: "อย่าปิดหน้าจอนี้ขณะลบข้อมูล",
-                                        allowOutsideClick: false,
-                                        allowEscapeKey: false,
-                                        timerProgressBar: true,
-                                        didOpen: () => {
-                                            Swal.showLoading();
-                                            const timer = Swal.getPopup().querySelector("b");
-                                        }
-                                    });
-                                    $.ajax({
-                                        url: "{{ route('debtor.remove') }}",
-                                        method: 'GET',
-                                        data: { vns: '{{ $vns }}' },
-                                        success:function(data){
-                                            let timerInterval
-                                            Swal.fire({
-                                                timer: 3000,
-                                                timerProgressBar: true,
-                                                title: 'กำลังลบข้อมูล',
-                                                allowOutsideClick: false,
-                                                allowEscapeKey: false,
-                                                timerProgressBar: true,
-                                                didOpen: () => {
-                                                    Swal.showLoading();
-                                                    const timer = Swal.getPopup().querySelector("b");
-                                                },
-                                                willClose: () => {
-                                                    clearInterval(timerInterval);
-                                                }
-                                            }).then((result) => {
-                                                if (result.dismiss === Swal.DismissReason.timer) {
-                                                    Swal.fire({
-                                                        icon: 'success',
-                                                        title: 'ลบข้อมูลสำเร็จ',
-                                                        text: '{{ number_format($deny) }}' + ' รายการ',
-                                                        showConfirmButton: false,
-                                                        allowOutsideClick: false,
-                                                        allowEscapeKey: false,
-                                                        timer: 10000
-                                                    })
-                                                    window.setTimeout(function () {
-                                                        location.reload()
-                                                    }, 3000);
-                                                }
-                                            })
-                                        }
-                                    });
-                                }
-                            });   
-                            }
-                        }
-                    }
+                    // {
+                    //     text: '<i class="fa-solid fa-xmark-circle text-danger"></i> ลบข้อมูลที่ไม่ผ่านการตรวจสอบ',
+                    //     action: function (e, dt, node, config) {
+                    //         var count = {{ $deny }};
+                    //         if(count <= 0){
+                    //             Swal.fire({
+                    //                 icon: 'error',
+                    //                 title: 'ไม่มีข้อมูล',
+                    //                 text: count + ' รายการ',
+                    //                 showCancelButton: false,
+                    //             });
+                    //         }else{
+                    //             Swal.fire({
+                    //             icon: 'warning',
+                    //             title: 'ยืนยันการลบข้อมูล ?',
+                    //             text: 'ลบเฉพาะ VN ที่ไม่ผ่านการตรวจสอบ ' + '{{ number_format($deny) }}' + ' รายการ',
+                    //             showCancelButton: true,
+                    //             confirmButtonText: "ลบข้อมูล",
+                    //             cancelButtonText: "ยกเลิก",
+                    //             confirmButtonColor: "#dc3545",
+                    //         }).then((result) => {
+                    //             if (result.isConfirmed) {
+                    //                 Swal.fire({
+                    //                     title: "กำลังลบ",
+                    //                     text: "อย่าปิดหน้าจอนี้ขณะลบข้อมูล",
+                    //                     allowOutsideClick: false,
+                    //                     allowEscapeKey: false,
+                    //                     timerProgressBar: true,
+                    //                     didOpen: () => {
+                    //                         Swal.showLoading();
+                    //                         const timer = Swal.getPopup().querySelector("b");
+                    //                     }
+                    //                 });
+                    //                 $.ajax({
+                    //                     url: "{{ route('debtor.remove') }}",
+                    //                     method: 'GET',
+                    //                     data: { vns: '{{ $vns }}' },
+                    //                     success:function(data){
+                    //                         let timerInterval
+                    //                         Swal.fire({
+                    //                             timer: 3000,
+                    //                             timerProgressBar: true,
+                    //                             title: 'กำลังลบข้อมูล',
+                    //                             allowOutsideClick: false,
+                    //                             allowEscapeKey: false,
+                    //                             timerProgressBar: true,
+                    //                             didOpen: () => {
+                    //                                 Swal.showLoading();
+                    //                                 const timer = Swal.getPopup().querySelector("b");
+                    //                             },
+                    //                             willClose: () => {
+                    //                                 clearInterval(timerInterval);
+                    //                             }
+                    //                         }).then((result) => {
+                    //                             if (result.dismiss === Swal.DismissReason.timer) {
+                    //                                 Swal.fire({
+                    //                                     icon: 'success',
+                    //                                     title: 'ลบข้อมูลสำเร็จ',
+                    //                                     text: '{{ number_format($deny) }}' + ' รายการ',
+                    //                                     showConfirmButton: false,
+                    //                                     allowOutsideClick: false,
+                    //                                     allowEscapeKey: false,
+                    //                                     timer: 10000
+                    //                                 })
+                    //                                 window.setTimeout(function () {
+                    //                                     location.reload()
+                    //                                 }, 3000);
+                    //                             }
+                    //                         })
+                    //                     }
+                    //                 });
+                    //             }
+                    //         });   
+                    //         }
+                    //     }
+                    // }
                 ]
             }
         },

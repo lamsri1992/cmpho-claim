@@ -39,7 +39,7 @@
                                         <th class="text-right">ค่าใช้จ่ายจริง</th>
                                         <th class="text-right">เรียกเก็บตามเกณฑ์</th>
                                         <th class="text-right">ส่วนต่าง</th>
-                                        <th class="text-center">สถานะ</th>
+                                        {{-- <th class="text-center">สถานะ</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -66,7 +66,15 @@
                                         <td class="text-center">{{ $rs->person_id }}</td>
                                         <td>{{ $rs->name }}</td>
                                         <td class="text-center">{{ $rs->hcode." : ".$rs->h_name }}</td>
-                                        <td class="text-center">{{ $rs->cases }}</td>
+                                        <td class="text-center">
+                                            <span class="text-danger">
+                                                {{ $rs->in_progress }}
+                                            </span>
+                                            :
+                                            <span class="text-success">
+                                                {{ $rs->cases }}
+                                            </span>
+                                        </td>
                                         <td class="text-primary text-right">{{ number_format($rs->total,2)." ฿" }}</td>
                                         <td class="text-right">{{ number_format($rs->nh_cost + $rs->d_cost,2)." ฿" }}</td>
                                         <td class="text-right">
@@ -79,9 +87,9 @@
                                                 {{ number_format($diff,2)." ฿" }}
                                             </span>
                                         </td>
-                                        <td class="text-center {{ $rs->p_color }}">
+                                        {{-- <td class="text-center {{ $rs->p_color }}">
                                             {{ $rs->p_name }}
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -108,7 +116,7 @@
                                                 {{ number_format($tdiff,2)." ฿" }}
                                             </span>
                                         </td>
-                                        <td></td>
+                                        {{-- <td></td> --}}
                                     </tr>
                                 </tfoot>
                             </table>

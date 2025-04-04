@@ -177,7 +177,7 @@
                                             @endif
                                         </td>
                                         <td class="text-center">
-                                            @if ($rs->p_status == 3)
+                                            @if ($rs->p_status == 1)
                                             <form action="{{ route('debtor.list.delete',$rs->uuid) }}" method="GET">
                                                 @csrf
                                                 <button type="button" class="btn btn-outline-danger btn-sm"
@@ -189,7 +189,7 @@
                                                         text: '{{ $rs->uuid }}',
                                                         showCancelButton: true,
                                                         confirmButtonText: 'ลบรายการ',
-                                                        cancelButtonText: 'ยกลก',
+                                                        cancelButtonText: 'ยกเลิก',
                                                     }).then((result) => {
                                                         if (result.isConfirmed) {
                                                             form.submit()
@@ -203,7 +203,6 @@
                                             </form>
                                             @else
                                             <span class="{{ $rs->p_text_color }}">
-                                                {!! $rs->p_icon !!}
                                                 {{ $rs->p_name }}
                                             </span>
                                             @endif
@@ -288,7 +287,7 @@
                                 title: 'เพิ่มรายการค่าใช้จ่าย ?',
                                 showCancelButton: true,
                                 confirmButtonText: 'เพิ่มรายการ',
-                                cancelButtonText: 'ยกลก',
+                                cancelButtonText: 'ยกเลิก',
                             }).then((result) => {
                                 if (result.isConfirmed) {
                                     form.submit()

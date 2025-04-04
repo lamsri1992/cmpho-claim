@@ -80,4 +80,18 @@ class configController extends Controller
         return back()->with('success','เพิ่ม '.$request->name. ' สำเร็จ');
     }
 
+    public function nhso()
+    {
+        $data = DB::table('nhso')->get();
+        return view('cmpho.config.nhso',['data'=>$data]);
+    }
+
+    public function status(Request $request)
+    {
+        $id = $request->get('id');
+        $stat = $request->get('status');
+        DB::table('nhso')->where('nhso_id', $id)->update(
+            [ 'active' => $stat ]
+        );
+    }
 }

@@ -35,7 +35,7 @@ class creditor extends Controller
                 LEFT JOIN nhso nh ON nh.nhso_code = cl.fs_code
                 LEFT JOIN drug d ON d.tid = cl.fs_code
                 WHERE cl.hospmain = $hcode
-                AND cl.p_status = 3
+                -- AND cl.p_status = 3
                 AND MONTH(cl.process_date) = MONTH(CURDATE())
                 AND YEAR(cl.process_date) = YEAR(CURDATE())
                 GROUP BY cl.hcode";
@@ -55,7 +55,7 @@ class creditor extends Controller
                 LEFT JOIN nhso nh ON nh.nhso_code = cl.fs_code
                 LEFT JOIN drug d ON d.tid = cl.fs_code
                 WHERE cl.hospmain = $hcode
-                AND cl.p_status = 3
+                -- AND cl.p_status = 3
                 AND MONTH(process_date) = $request->month
                 AND YEAR(process_date) = $year
                 GROUP BY cl.hcode";
@@ -68,21 +68,25 @@ class creditor extends Controller
     {
         $hcode = Auth::user()->hcode;
         $data = DB::table('claim_list')
-            ->select(DB::raw('DISTINCT vn,COUNT(vn) AS cases,
+            ->select(DB::raw('
+            DISTINCT vn,
+            COUNT(vn) AS cases,
+            SUM(CASE WHEN claim_list.p_status = 3 THEN 1 ELSE 0 END) AS in_progress,
             SUM(total) as total,
             SUM(nhso_cost * num) AS nh_cost,
             SUM(rate * num) AS d_cost'),
-            'visitdate','person_id','name','hcode','h_name','p_status.p_name','p_color')
+            'visitdate','person_id','name','hcode','h_name')
             ->leftjoin('hospital','hospital.h_code','claim_list.hcode')
             ->leftjoin('nhso','nhso.nhso_code','claim_list.fs_code')
             ->leftjoin('drug','drug.tid','claim_list.fs_code')
-            ->join('p_status','p_status.id','claim_list.p_status')
+            // ->join('p_status','p_status.id','claim_list.p_status')
             ->where('hcode',$id)
             ->where('hospmain',$hcode)
             ->whereRaw('MONTH(process_date) = '.$month.'')
             // ->where('p_status',3)
-            ->groupby('vn','visitdate','person_id','name','hcode','h_name','p_status.p_name','p_color')
+            ->groupby('vn','visitdate','person_id','name','hcode','h_name')
             ->get();
+        // echo $data;
         return view('creditor.hospitalList',['data'=>$data,'id'=>$id]);
     }
 
@@ -156,13 +160,15 @@ class creditor extends Controller
         return back()->with('success','ยืนยันจ่ายรายการแล้ว');
     }
     
-    public function deny($id)
+    public function deny(Request $request,string $id)
     {
+        $sweetalertValue = $request->input('sweetalert_value');
         $currentDate = date('Y-m-d H:i:s');
         $data = DB::table('claim_list')->where('uuid',$id)->update(
             [
                 "p_status" => 5,
-                "updated_at" => $currentDate
+                "deny_note" => $sweetalertValue,
+                "updated_at" => $currentDate,
                 
             ]
         );

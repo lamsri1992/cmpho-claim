@@ -266,7 +266,7 @@ class debtor extends Controller
     {
         $hcode = Auth::user()->hcode;
         $data = DB::table('claim_list')
-            ->select('uuid','claim_id','vn','visitdate','hospmain','hcode','name','hn','h_name',
+            ->select('uuid','claim_id','vn','visitdate','hospmain','hcode','name','hn','h_name','deny_note',
             'icd10','fs_code','total','nhso_code','nhso_name','nhso_unit','nhso_cost','p_name','p_icon','p_text_color')
             ->leftjoin('nhso','nhso.nhso_code','claim_list.fs_code')
             ->leftjoin('hospital','hospital.h_code','claim_list.hospmain')
@@ -293,9 +293,11 @@ class debtor extends Controller
             ->leftjoin('drug','drug.tid','claim_list.fs_code')
             ->leftjoin('hospital','hospital.h_code','claim_list.hospmain')
             ->leftjoin('p_status','p_status.id','claim_list.p_status')
+            // ->where('nhso.active','Y')
             ->where('vn', $id)
             ->orderBy('claim_id','ASC')
             ->get();
+        // dd($list);
         return view('debtor.show',['data'=>$data,'list'=>$list]);
     }
 
