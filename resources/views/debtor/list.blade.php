@@ -193,7 +193,7 @@
                                     $.ajax({
                                         url: "{{ route('debtor.send') }}",
                                         method: 'GET',
-                                        data: { vns: '{{ $vns }}' },
+                                        // data: { vns: '{{ $vns }}' },
                                         success:function(data){
                                             let timerInterval
                                             Swal.fire({
