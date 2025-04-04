@@ -125,6 +125,13 @@
                                     </tr>
                                     @endforeach
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3"></td>
+                                        <td></td>
+                                        <td colspan="7"></td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -322,6 +329,31 @@
             sLengthMenu: '<small>แสดง _MENU_ รายการ</small>',
             sInfoEmpty: '<small>ไม่มีข้อมูล</small>'
         },
+        initComplete: function () {
+            this.api()
+                .columns([3])
+                .every(function () {
+                    var column = this;
+                    var select = $(
+                            '<select class="custom-select" style="width:100%;"><option value="">แสดงทั้งหมด</option></select>'
+                        )
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                            var val = DataTable.util.escapeRegex($(this).val());
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+                    column
+                        .data()
+                        .unique()
+                        .sort()
+                        .each(function (d, j) {
+                            select.append('<option class="custom-select" value="' + d + '">' + d +
+                                '</option>');
+                        });
+                });
+        }
     });
 </script>
 @endsection
