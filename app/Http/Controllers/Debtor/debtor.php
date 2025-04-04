@@ -338,30 +338,24 @@ class debtor extends Controller
         $currentDate = date('Y-m-d H:i:s');
         $hcode = Auth::user()->hcode;
         $transCode = $hcode.date('Ym').substr(rand(),1,5);
-        $query = "UPDATE claim_list,
-                (
-                SELECT 
-                claim_list.vn,
-                IF(N.vn IS NULL,'Y','N') AS N
-                FROM claim_list
-                LEFT JOIN nhso ON `nhso`.`nhso_code` = `claim_list`.`fs_code` 
-                LEFT JOIN drug ON `drug`.`tid` = `claim_list`.`fs_code` 
-                INNER JOIN hospital ON `hospital`.`h_code` = `claim_list`.`hospmain` 
-                INNER JOIN p_status ON `p_status`.`id` = 1
-                LEFT JOIN(
-                    SELECT DISTINCT vn
-                    FROM claim_list
-                    LEFT JOIN nhso ON `nhso`.`nhso_code` = `claim_list`.`fs_code` 
-                    LEFT JOIN drug ON `drug`.`tid` = `claim_list`.`fs_code` 
-                    inner join hospital ON `hospital`.`h_code` = `claim_list`.`hospmain` 
-                    WHERE hcode = $hcode and `claim_list`.`p_status` = 1 
-                    AND claim_list.vn in($vns)
-                    AND IF(NOT nhso_code IS NULL OR NOT tid IS NULL,'Y','N') = 'N'
-                    ) N ON claim_list.vn = N.vn
-                WHERE hcode = $hcode 
-                ) st
-                SET claim_list.p_status = IF(st.N = 'Y',2,1) , trans_code = $transCode
-                WHERE claim_list.vn IN($vns) AND st.vn = claim_list.vn";
+        $query = "UPDATE claim_list
+                SET p_status = 2 , trans_code = $transCode
+                WHERE vn IN (
+                    SELECT vn
+                    FROM (
+                        SELECT vn, fs_code
+                        FROM claim_list
+                        WHERE hcode = $hcode
+                    ) AS subquery_claim_list
+                    GROUP BY vn
+                    HAVING COUNT(*) = SUM(CASE
+                        WHEN EXISTS (SELECT 1 FROM nhso WHERE nhso_code = subquery_claim_list.fs_code)
+                            OR EXISTS (SELECT 1 FROM drug WHERE tid = subquery_claim_list.fs_code)
+                        THEN 1
+                        ELSE 0
+                    END)
+                )
+                AND hcode = $hcode;";
         $data = DB::select($query);
     }
 
