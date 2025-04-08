@@ -236,7 +236,7 @@
                     {
                         text: '<i class="fa-solid fa-xmark-circle text-danger"></i> ลบข้อมูลการนำเข้า',
                         action: function (e, dt, node, config) {
-                            var count = {{ $deny }};
+                            var count = {{ count($data) }};
                             if(count <= 0){
                                 Swal.fire({
                                     icon: 'error',
