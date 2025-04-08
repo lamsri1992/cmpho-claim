@@ -327,7 +327,6 @@ class debtor extends Controller
             ->leftjoin('hospital','hospital.h_code','claim_list.hospmain')
             ->leftjoin('sex_type','sex_type.sex_id','claim_list.sex')
             ->where('vn', $id)
-            // ->where('p_status', 3)
             ->first();
 
         $list = DB::table('claim_list')
@@ -337,7 +336,6 @@ class debtor extends Controller
             ->leftjoin('p_status','p_status.id','claim_list.p_status')
             // ->where('nhso.active','Y')
             ->where('vn', $id)
-            ->where('p_status', 3)
             ->orderBy('claim_id','ASC')
             ->get();
         // dd($list);

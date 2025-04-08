@@ -20,6 +20,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // HTTPS ALLOW
-        resolve(\Illuminate\Routing\UrlGenerator::class)->forceScheme('https');
+        // resolve(\Illuminate\Routing\UrlGenerator::class)->forceScheme('https');
     }
 }
