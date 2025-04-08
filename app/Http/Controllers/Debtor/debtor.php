@@ -327,7 +327,7 @@ class debtor extends Controller
             ->leftjoin('hospital','hospital.h_code','claim_list.hospmain')
             ->leftjoin('sex_type','sex_type.sex_id','claim_list.sex')
             ->where('vn', $id)
-            ->where('p_status', 3)
+            // ->where('p_status', 3)
             ->first();
 
         $list = DB::table('claim_list')
