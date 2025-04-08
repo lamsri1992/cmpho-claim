@@ -107,24 +107,65 @@ class debtor extends Controller
                 'file.required' => 'กรุณาแนบไฟล์',
             ],
         );
+        
+        $import = new ClaimImport();
+
+        try {
+            Excel::import($import, $request->file('file'));
+
+            $duplicateVns = $import->getDuplicateVns();
+
+            if (!empty($duplicateVns)) {
+                $message = 'ไม่สามารถนำเข้ารหัส VN ต่อไปนี้ได้เนื่องจากมีอยู่ในระบบแล้ว : ' . implode(', ', array_unique($duplicateVns));
+                return redirect()->back()->with('invalid', $message);
+            }
+            
+            $file  = $request->file('file');
+            $fileName = $hcode."_".date('Ymdhis').".xls";
+            $destination = public_path('uploads/opae');
+
+            File::makeDirectory($destination, 0755, true, true);
+            $file->move(public_path('uploads/opae'), $fileName);
+
+            DB::table('import_log')->insert(
+                [
+                    'ex_file' => $fileName,
+                    'import_date' => date("Y-m-d"),
+                    'hcode' => $hcode,
+                    'type' => 'OPAE',
+                ]
+            );
+            return back()->with('success', 'นำเข้าข้อมูลสำเร็จ');
+
+            } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+                $failures = $e->failures();
+                $errorMessages = [];
+                foreach ($failures as $failure) {
+                    $errorMessages[] = "แถว: " . $failure->row() . ", คอลัมน์: " . $failure->attribute() . ", ข้อผิดพลาด: " . implode(", ", $failure->errors());
+                }
+                return redirect()->back()->with('invalid', 'เกิดข้อผิดพลาดในการนำเข้า: ' . implode("<br>", $errorMessages));
+            } catch (\Exception $e) {
+                return redirect()->back()->with('invalid', 'เกิดข้อผิดพลาดที่ไม่คาดคิด: ' . $e->getMessage());
+            }
   
-        Excel::import(new ClaimImport, $request->file('file'));
-        $file  = $request->file('file');
-        $fileName = $hcode."_".date('Ymdhis').".xls";
-        $destination = public_path('uploads/opae');
+        // Excel::import(new ClaimImport, $request->file('file'));
+        
+        // $file  = $request->file('file');
+        // $fileName = $hcode."_".date('Ymdhis').".xls";
+        // $destination = public_path('uploads/opae');
 
-        File::makeDirectory($destination, 0755, true, true);
-        $file->move(public_path('uploads/opae'), $fileName);
+        // File::makeDirectory($destination, 0755, true, true);
+        // $file->move(public_path('uploads/opae'), $fileName);
 
-        DB::table('import_log')->insert(
-            [
-                'ex_file' => $fileName,
-                'import_date' => date("Y-m-d"),
-                'hcode' => $hcode,
-                'type' => 'OPAE',
-            ]
-        );
-        return back()->with('success', 'นำเข้าข้อมูลสำเร็จ');
+        // DB::table('import_log')->insert(
+        //     [
+        //         'ex_file' => $fileName,
+        //         'import_date' => date("Y-m-d"),
+        //         'hcode' => $hcode,
+        //         'type' => 'OPAE',
+        //     ]
+        // );
+        // return back()->with('success', 'นำเข้าข้อมูลสำเร็จ');
     }
 
     public function create()
@@ -361,9 +402,8 @@ class debtor extends Controller
 
     public function remove(Request $request)
     {
-        $vns = rtrim($request->vns, ",");
         $hcode = Auth::user()->hcode;
-        $query = "DELETE FROM claim_list WHERE vn IN($vns)";
+        $query = "DELETE FROM claim_list WHERE hcode = $hcode AND p_status = 1";
         $data = DB::select($query);
     }
 }

@@ -16,6 +16,13 @@
 
     <section class="content">
         <div class="container-fluid">
+            @if (session('invalid'))
+            <div class="alert alert-warning alert-dismissible">
+                <h5><i class="icon fas fa-exclamation-triangle"></i> คำเตือน</h5>
+                {{ session('invalid') }}
+            </div>
+            @endif
+
             <div class="row">
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-info">
@@ -114,7 +121,7 @@
                                     <tr>
                                         <td class="text-center">{{ $i }}</td>
                                         <td class="text-center">
-                                            <a href="{{ asset('uploads/'.$rs->ex_file) }}">
+                                            <a href="{{ asset('uploads/opae/'.$rs->ex_file) }}">
                                                 {{ $rs->ex_file }}
                                             </a>
                                         </td>
