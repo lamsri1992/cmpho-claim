@@ -269,7 +269,7 @@
                                     $.ajax({
                                         url: "{{ route('debtor.remove') }}",
                                         method: 'GET',
-                                        data: { vns: '{{ $vns }}' },
+                                        // data: { vns: '{{ $vns }}' },
                                         success:function(data){
                                             let timerInterval
                                             Swal.fire({
