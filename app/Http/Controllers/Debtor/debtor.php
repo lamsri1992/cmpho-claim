@@ -285,8 +285,8 @@ class debtor extends Controller
                     FROM claim_list
                     LEFT JOIN nhso ON `nhso`.`nhso_code` = `claim_list`.`fs_code` 
                     LEFT JOIN drug ON `drug`.`tid` = `claim_list`.`fs_code` 
-                    INNER JOIN hospital ON `hospital`.`h_code` = `claim_list`.`hospmain` 
-                    INNER JOIN p_status ON `p_status`.`id` = 1
+                    LEFT JOIN hospital ON `hospital`.`h_code` = `claim_list`.`hospmain` 
+                    LEFT JOIN p_status ON `p_status`.`id` = 1
                     LEFT JOIN(
                         SELECT DISTINCT vn
                         FROM claim_list
