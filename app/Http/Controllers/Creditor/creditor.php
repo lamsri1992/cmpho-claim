@@ -110,7 +110,7 @@ class creditor extends Controller
             ->join('p_status','p_status.id','claim_list.p_status')
             ->where('vn', $id)
             ->where('hospmain', $hcode)
-            ->where('p_status', 3)
+            // ->where('p_status', 3)
             ->get();
         return view('creditor.vn',
             [
