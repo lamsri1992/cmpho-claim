@@ -45,7 +45,7 @@ class debtor extends Controller
                     LEFT JOIN nhso nh ON nh.nhso_code = cl.fs_code
                     LEFT JOIN drug d ON d.tid = cl.fs_code
                     WHERE cl.hcode = $hcode
-                    -- AND cl.p_status = 3
+                    AND cl.p_status = 3
                     AND MONTH(cl.process_date) = MONTH(CURDATE())
                     AND YEAR(cl.process_date) = YEAR(CURDATE())
                     GROUP BY cl.hospmain";
@@ -65,7 +65,7 @@ class debtor extends Controller
                     LEFT JOIN nhso nh ON nh.nhso_code = cl.fs_code
                     LEFT JOIN drug d ON d.tid = cl.fs_code
                     WHERE cl.hcode = $hcode
-                    -- AND cl.p_status = 3
+                    AND cl.p_status = 3
                     AND MONTH(process_date) = $request->month
                     AND YEAR(process_date) = $year
                     GROUP BY cl.hospmain";
