@@ -35,7 +35,7 @@ class creditor extends Controller
                 LEFT JOIN nhso nh ON nh.nhso_code = cl.fs_code
                 LEFT JOIN drug d ON d.tid = cl.fs_code
                 WHERE cl.hospmain = $hcode
-                -- AND cl.p_status = 3
+                AND cl.p_status = 3
                 AND MONTH(cl.process_date) = MONTH(CURDATE())
                 AND YEAR(cl.process_date) = YEAR(CURDATE())
                 GROUP BY cl.hcode";
@@ -55,7 +55,7 @@ class creditor extends Controller
                 LEFT JOIN nhso nh ON nh.nhso_code = cl.fs_code
                 LEFT JOIN drug d ON d.tid = cl.fs_code
                 WHERE cl.hospmain = $hcode
-                -- AND cl.p_status = 3
+                AND cl.p_status = 3
                 AND MONTH(process_date) = $request->month
                 AND YEAR(process_date) = $year
                 GROUP BY cl.hcode";
@@ -83,7 +83,7 @@ class creditor extends Controller
             ->where('hcode',$id)
             ->where('hospmain',$hcode)
             ->whereRaw('MONTH(process_date) = '.$month.'')
-            ->where('p_status',3)
+            // ->where('p_status',3)
             ->groupby('vn','visitdate','person_id','name','hcode','h_name')
             ->get();
         // echo $data;
