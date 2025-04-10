@@ -83,7 +83,7 @@ class creditor extends Controller
             ->where('hcode',$id)
             ->where('hospmain',$hcode)
             ->whereRaw('MONTH(process_date) = '.$month.'')
-            // ->where('p_status',3)
+            ->where('p_status',3)
             ->groupby('vn','visitdate','person_id','name','hcode','h_name')
             ->get();
         // echo $data;
