@@ -196,12 +196,12 @@
                                             </span>
                                         </td>
                                         <td></td>
-                                        <td></td>
                                         <td class="text-center">
                                             <span class="fw-bold text-success">
                                                 {{ number_format($paid+$pdrg,2) }} ฿
                                             </span>
                                         </td>
+                                        <td></td>
                                     </tr>
                                 </tfoot>
                             </table>
